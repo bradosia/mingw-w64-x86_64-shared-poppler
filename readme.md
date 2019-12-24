@@ -1,5 +1,5 @@
-# SQLite3 static libraries for MinGW64
-Includes a static library linked test program in windows with MinGW64 compiler. All static libraries are prebuilt for linking. 
+# Poppler shared libraries for MinGW64
+Includes a shared library linked test program in windows with MinGW64 compiler. All shared libraries are prebuilt and included with the executable. 
 
 Features demonstrated:
 * Create a Table
