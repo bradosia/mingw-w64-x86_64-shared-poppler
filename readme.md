@@ -1,17 +1,16 @@
-# SQLite3 static libraries for MinGW64
-Includes a static library linked test program in windows with MinGW64 compiler. All static libraries are prebuilt for linking. 
+# Poppler shared libraries for MinGW64
+Includes a shared library linked test program in windows with MinGW64 compiler. All shared libraries are prebuilt and included with the executable. 
 
 Features demonstrated:
-* Create a Table
-* INSERT Operation
-* SELECT Operation
-* UPDATE Operation
-* DELETE Operation
+* Open PDF
+* print meta fields
+* print full text
+* print text list
 
-Code is adapted from https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
+Code is adapted from https://github.com/jeroen/popplertest
 
 Sources:
-* MSYS2 (https://msys2.duckdns.org/package/mingw-w64-x86_64-sqlite3?repo=mingw64)
+* MSYS2 (https://msys2.duckdns.org/package/mingw-w64-x86_64-poppler?repo=mingw64)
 
 Compiler: 
 - gcc (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0
@@ -22,8 +21,4 @@ IDE:
 	* Build id: 20180917-1800
 
 Library: 
-* SQLite 3.30.1-1
-	* readline 8.0.001-2
-	* termcap 1.3.1-5
-	* tcl 8.6.10-1
-	* zlib 1.2.11-7
+* poppler 0.82.0-1
