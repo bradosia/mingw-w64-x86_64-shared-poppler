@@ -17,57 +17,59 @@
 
 using namespace poppler;
 
-std::string to_utf8(ustring x){
-  if(x.length()){
-    byte_array buf = x.to_utf8();
-    return std::string(buf.data(), buf.size());
-  } else {
-    return std::string("null");
-  }
+std::string to_utf8(ustring x) {
+	if (x.length()) {
+		byte_array buf = x.to_utf8();
+		return std::string(buf.data(), buf.size());
+	} else {
+		return std::string("null");
+	}
 }
 
-std::string to_latin1(ustring x){
-  return std::string(x.to_latin1());
+std::string to_latin1(ustring x) {
+	return std::string(x.to_latin1());
 }
 
-void print_toc(toc_item * item){
-  std::cout << " - " << to_utf8(item->title()) <<  std::endl;
-  for (toc_item* & i: item->children())
-    print_toc(i);
+void print_toc(poppler::toc_item * item) {
+	std::cout << " - " << to_utf8(item->title()) << std::endl;
+	for (poppler::toc_item* & i : item->children())
+		print_toc(i);
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
-  document * doc = document::load_from_file("hello.pdf", "", "");
-  if(!doc)
-    throw std::runtime_error("Failed to read pdf file");
-  page *p(doc->create_page(0));
-  if(!p)
-    throw std::runtime_error("Failed to create pagee");
-
+	poppler::document * doc = poppler::document::load_from_file("hello.pdf", "",
+			"");
+	if (!doc)
+		throw std::runtime_error("Failed to read pdf file");
+	page *p(doc->create_page(0));
+	if (!p)
+		throw std::runtime_error("Failed to create pagee");
 #ifdef _WIN32
-  SetConsoleOutputCP(CP_UTF8);
+	SetConsoleOutputCP(CP_UTF8);
 #endif
 
-  // Test meta keys
-  for (std::string& s: doc->info_keys())
-    std::cout << s << ": " << to_utf8(doc->info_key(s)) << std::endl;
+	// Test meta keys
+	for (std::string& s : doc->info_keys())
+		std::cout << s << ": " << to_utf8(doc->info_key(s)) << std::endl;
 
-  // Test meta fields:
-  toc *mytok = doc->create_toc();
-  if(mytok && mytok->root()){
-    std::cout << "TOC title: " << to_utf8(mytok->root()->title()) <<  std::endl;
-    std::cout << "\nTable of Contents:"  << std::endl;
-    print_toc(mytok->root());
-  }
+	// Test meta fields:
+	toc *mytok = doc->create_toc();
+	if (mytok && mytok->root()) {
+		std::cout << "TOC title: " << to_utf8(mytok->root()->title())
+				<< std::endl;
+		std::cout << "\nTable of Contents:" << std::endl;
+		print_toc(mytok->root());
+	}
 
-  // Test full text
-  std::cout << "\nPDF text:\n" << to_utf8(p->text()) <<  std::endl;
+	// Test full text
+	std::cout << "\nPDF text:\n" << to_utf8(p->text()) << std::endl;
 
-  // Test text list
-  std::cout << "\nText Boxes:\n" << std::endl;
-  for (text_box& i: p->text_list())
-      std::cout << "[" << i.bbox().x() << "x" << i.bbox().y() << "] "  << to_utf8(i.text()) << std::endl;
-  system("pause");
-  return 0;
+	// Test text list
+	std::cout << "\nText Boxes:\n" << std::endl;
+	for (text_box& i : p->text_list())
+		std::cout << "[" << i.bbox().x() << "x" << i.bbox().y() << "] "
+				<< to_utf8(i.text()) << std::endl;
+	system("pause");
+	return 0;
 }
